@@ -73,18 +73,128 @@
 
 
 # Función que recibe dos matrices cuadradas (NxN) y devuelve una tercera matriz que contiene el valor 1 en las posiciones en que el valor de A y B coinciden y 0 en caso contrario.
-def valores_iguales_matriz(matriz1, matriz2):
-    matriz = [[0 for j in range(len(matriz1))] for i in range(len(matriz1))]
-    for i in range (len(matriz1)):
-        for j in range (len(matriz1[i])):
-            if matriz1[i][j] == matriz2[i][j]:
-                matriz[i][j] = 1
-            else:
-                matriz[i][j] = 0
-    return matriz
+# def valores_iguales_matriz(matriz1, matriz2):
+#     matriz = [[0 for j in range(len(matriz1))] for i in range(len(matriz1))]
+#     for i in range (len(matriz1)):
+#         for j in range (len(matriz1[i])):
+#             if matriz1[i][j] == matriz2[i][j]:
+#                 matriz[i][j] = 1
+#             else:
+#                 matriz[i][j] = 0
+#     return matriz
 
-# Tests
-matriz1 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] # Matriz 3x3
-matriz2 = [[1, 5, 6], [7, 5, 9], [1, 2, 9]] # Matriz 3x3
-print(valores_iguales_matriz(matriz1, matriz2)) # Debería mostrar una matriz identidad
+# # Tests
+# matriz1 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] # Matriz 3x3
+# matriz2 = [[1, 5, 6], [7, 5, 9], [1, 2, 9]] # Matriz 3x3
+# print(valores_iguales_matriz(matriz1, matriz2)) # Debería mostrar una matriz identidad
 # assert valores_iguales_matriz(matriz1, matriz2) == [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+
+
+# def hallarPSilla(matriz):
+#     puntosSilla = []
+#     traspuesta =  [[None] * len(matriz) for i in range(len(matriz[0]))]
+#     for fila in range(len(matriz)):
+#         for columna in  range(len(matriz[fila])):
+#             traspuesta[columna][fila] = matriz[fila][columna]
+#     for i in range(len(matriz)):
+#         for j in range(len(matriz[i])):
+#             if (matriz[i][j] == min(matriz[i]) and matriz[i][j] == max(traspuesta[j])) or (matriz[i][j] == max(matriz[i]) and matriz[i][j] == min(traspuesta[j])):
+#                 puntosSilla.append((i, j))
+
+#     return puntosSilla
+
+# print(hallarPSilla([[1,2,3],
+#                     [4,5,2],
+#                     [3,4,5],
+#                     [3,4,5],
+#                     [4,5,5]]))
+# print(hallarPSilla([[1,4,3,3,4],
+#                     [2,5,4,4,5],
+#                     [3,2,5,5,5]]))
+
+
+
+# # La mas sencilla e intuitiva
+# matriz = []
+# numero_filas = 4
+# numero_columnas = 5
+# for i in range(numero_filas):
+#     matriz.append([])
+#     for j in range(numero_columnas):
+#         matriz[i].append(None)
+
+# print(matriz)
+
+# # Menos intuitiva pero mas eficiente
+# matriz = [None] * numero_filas
+# for i in range(numero_filas):
+#     matriz[i] = [None] * numero_columnas
+# print(matriz)
+
+# # Versión mas compacta
+# matriz = [range(numero_columnas) for i in range(numero_filas)]
+# print(matriz)
+
+# # Variación de la anterior
+# matriz = [[None] * numero_columnas for i in range(numero_filas)]
+# print(matriz)      
+
+
+# import numpy as np
+
+# def contarElementos(lista):
+#     diccionario = {}
+#     aux = np.array(lista)
+#     elemento, indice, veces = np.unique(aux, return_index=True, return_counts=True)
+#     print(elemento)
+#     for indice in range(len(elemento)):
+        
+#         if elemento[indice] not in diccionario:
+#             diccionario.update({elemento[indice]:veces[indice]})
+#     return diccionario
+
+# print(contarElementos([1,2,3,4,5,2,3,4,5,3,4,5,4,5,5]))
+# print(contarElementos(['gato', 'pez', 'perro', 'pez', 'perro', 'gallina', 'perro']))
+
+
+# import numpy as np
+
+# def valores_iguales_matriz(matriz1, matriz2):
+#     aux = np.zeros((len(matriz1), len(matriz1)))
+#     aux = np.where(np.array(matriz1) == np.array(matriz2), 1, aux)
+#     return aux
+
+# # Tests
+# matriz1 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] # Matriz 3x3
+# matriz2 = [[1, 5, 6], [7, 5, 9], [1, 2, 9]] # Matriz 3x3
+# print(valores_iguales_matriz(matriz1, matriz2))
+
+
+import numpy as np
+
+def hallarPSilla(matriz):
+    puntosSilla = []
+    aux = np.array(matriz)
+    for fila in range(aux.shape[0]):
+        for columna in range(aux.shape[1]):
+            if (aux[fila,columna] == np.min(aux[fila,:]) and aux[fila,columna] == np.max(aux[:,columna])) or (
+                aux[fila,columna] == np.max(aux[fila,:]) and aux[fila,columna] == np.min(aux[:,columna])):
+                puntosSilla.append((fila,columna))
+    return puntosSilla
+
+print(hallarPSilla([[1,2,3],
+                    [4,5,2],
+                    [3,4,5],
+                    [3,4,5],
+                    [4,5,5]]))
+print(hallarPSilla([[1,4,3,3,4],
+                    [2,5,4,4,5],
+                    [3,2,5,5,5]]))
+print(hallarPSilla([[1,2,6],
+                    [4,5,5],
+                    [3,4,5],
+                    [3,4,5],
+                    [4,5,5]]))
+print(hallarPSilla([[1,4,3,3,4],
+                    [2,5,4,4,5],
+                    [6,5,5,5,5]]))
