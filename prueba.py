@@ -172,29 +172,176 @@
 
 import numpy as np
 
-def hallarPSilla(matriz):
-    puntosSilla = []
-    aux = np.array(matriz)
-    for fila in range(aux.shape[0]):
-        for columna in range(aux.shape[1]):
-            if (aux[fila,columna] == np.min(aux[fila,:]) and aux[fila,columna] == np.max(aux[:,columna])) or (
-                aux[fila,columna] == np.max(aux[fila,:]) and aux[fila,columna] == np.min(aux[:,columna])):
-                puntosSilla.append((fila,columna))
-    return puntosSilla
+# def hallarPSilla(matriz):
+#     puntosSilla = []
+#     aux = np.array(matriz)
+#     for fila in range(aux.shape[0]):
+#         for columna in range(aux.shape[1]):
+#             if (aux[fila,columna] == np.min(aux[fila,:]) and aux[fila,columna] == np.max(aux[:,columna])) or (
+#                 aux[fila,columna] == np.max(aux[fila,:]) and aux[fila,columna] == np.min(aux[:,columna])):
+#                 puntosSilla.append((fila,columna))
+#     return puntosSilla
 
-print(hallarPSilla([[1,2,3],
-                    [4,5,2],
-                    [3,4,5],
-                    [3,4,5],
-                    [4,5,5]]))
-print(hallarPSilla([[1,4,3,3,4],
-                    [2,5,4,4,5],
-                    [3,2,5,5,5]]))
-print(hallarPSilla([[1,2,6],
-                    [4,5,5],
-                    [3,4,5],
-                    [3,4,5],
-                    [4,5,5]]))
-print(hallarPSilla([[1,4,3,3,4],
-                    [2,5,4,4,5],
-                    [6,5,5,5,5]]))
+# print(hallarPSilla([[1,2,3],
+#                     [4,5,2],
+#                     [3,4,5],
+#                     [3,4,5],
+#                     [4,5,5]]))
+# print(hallarPSilla([[1,4,3,3,4],
+#                     [2,5,4,4,5],
+#                     [3,2,5,5,5]]))
+# print(hallarPSilla([[1,2,6],
+#                     [4,5,5],
+#                     [3,4,5],
+#                     [3,4,5],
+#                     [4,5,5]]))
+# print(hallarPSilla([[1,4,3,3,4],
+#                     [2,5,4,4,5],
+#                     [6,5,5,5,5]]))
+import pandas as pd
+
+# Crear un DataFrame a partir de un diccionario
+# data = {
+#     'Nombre': ['Ana', 'Juan', 'Carlos', 'Marta'],
+#     'Edad': [34, 27, 45, 19]
+# }
+
+# df = pd.DataFrame(data)
+
+# print(data)
+# print(df)
+
+myarray = np.array([[10,30,20], [50,40,60],[1000,2000,3000]])
+rownames = ['lentejas', 'espinacas', 'cerveza']
+colnames = ['enero', 'febrero', 'marzo']
+mydf = pd.DataFrame(myarray, index=rownames, columns=colnames)
+print("Compras:")
+print(mydf)
+print(mydf.T)
+
+print("Compras de enero:")
+print(mydf['enero'])
+print("mydf['enero']['lentejas']")
+print(mydf['enero']['lentejas'])
+print("mydf.loc['lentejas', 'enero']")
+print(mydf.loc['lentejas', 'enero'])
+print("mydf.loc['lentejas']")
+print(mydf.loc['lentejas'])
+print("mydf.loc['lentejas'].sum()")
+print(mydf.loc['lentejas'].sum())
+
+
+#NO SE PUEDE
+# print("mydf['lentejas']")
+# print(mydf['lentejas'])
+# print("mydf['lentejas'].sum()")
+# print(mydf['lentejas'].sum())
+
+
+mydf.plot()
+
+
+from matplotlib import pyplot as plt
+years = [1950,1960,1970,1980,1990,2000,2010]
+gdp = [300.2,543.3,1075.9,2862.5,5979.6,10289.7,14958.3]
+
+plt.plot(years,gdp,color='green',marker='o',linestyle='solid')
+plt.title("Nominal GDP")
+
+plt.ylabel("Billions of $")
+
+plt.plot(years,gdp,color='green',marker='o',linestyle='solid')
+plt.title("Nominal GDP")
+
+plt.ylabel("Billions of $")
+
+plt.style.use('ggplot')
+
+plt.plot(years,gdp,color='red',marker='^', markersize=12,linestyle='dashed')
+plt.title("Nominal GDP")
+
+plt.ylabel("Billions of $")
+plt.show()
+
+plt.style.available
+plt.style.use('default')
+
+plt.plot(years,gdp,'bo',linestyle='solid')
+plt.title("Nominal GDP")
+
+plt.ylabel("Billions of $")
+plt.show()
+
+#solo jupiter
+#%matplotlib inline
+
+plt.plot(years,gdp,'bo',linestyle='solid')
+plt.title("Nominal GDP")
+
+plt.ylabel("Billions of $")
+
+variance = [1, 2, 4, 8, 16, 32, 64, 128, 256]
+bias_squared = [256, 128, 64, 32, 16, 8, 4, 2, 1]
+total_error = [x + y for x, y in zip(variance, bias_squared)]
+
+xs = [i for i, _ in enumerate(variance)]
+
+# We can make multiple calls to plt.plot
+# to show multiple series on the same chart
+
+plt.plot(xs, variance, 'g-', label='variance') # green solid line
+plt.plot(xs, bias_squared, 'r-.', label='bias^2') # red dot-dashed line
+plt.plot(xs, total_error, 'b:', label='total error') # blue dotted line
+
+# Because we've assigned labels to each series,
+# we can get a legend for free (loc=9 means "top center")
+
+plt.legend(loc=9)
+plt.xlabel("model complexity")
+plt.xticks([])
+plt.title("The Bias-Variance Tradeoff")
+plt.show()
+
+# evenly sampled time at 200ms intervals
+t = np.arange(0., 5., 0.2)
+
+# red dashes, blue squares and green triangles
+plt.plot(t, t, 'r--', t, t**2, 'bs', t, t**3, 'g^')
+plt.show()
+
+# Pasa valores para x generados por range y calcula los de y con la expresión cuadrática
+x_values = range(1, 1001)
+y_values = [x**2 for x in x_values]
+
+plt.style.use('seaborn')
+fig, ax = plt.subplots()
+
+ax.scatter(x_values, y_values, s=10)
+
+ax.set_title("Square Numbers", fontsize=24) 
+ax.set_xlabel("Value", fontsize=14) 
+ax.set_ylabel("Square of Value", fontsize=14)
+
+# Fijamos el rango de los ejes
+ax.axis([0, 1100, 0, 1100000]) 
+
+plt.show()
+
+x_values = range(1, 1001)
+y_values = [x**2 for x in x_values]
+
+plt.style.use('seaborn')
+fig, ax = plt.subplots()
+
+# Pasamos los valores de y a c
+# Con cmap, indicamos que queremos un "colormap" e indicamos el patrón Blues
+
+ax.scatter(x_values, y_values, c=y_values, cmap=plt.cm.Blues, s=10)
+
+ax.set_title("Square Numbers", fontsize=24) 
+ax.set_xlabel("Value", fontsize=14) 
+ax.set_ylabel("Square of Value", fontsize=14)
+
+ax.axis([0, 1100, 0, 1100000]) 
+
+plt.show()
